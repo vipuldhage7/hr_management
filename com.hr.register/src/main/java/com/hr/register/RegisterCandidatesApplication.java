@@ -15,8 +15,7 @@ import com.hr.pojo.Candidate;
 
 @EntityScan(basePackages = "com.hr.pojo")
 @EnableJpaRepositories(basePackages = "com.hr.dao")
-@SpringBootApplication()
-
+@SpringBootApplication
 public class RegisterCandidatesApplication{
 
 	public static void main(String[] args) {

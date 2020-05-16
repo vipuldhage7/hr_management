@@ -21,72 +21,81 @@ public class RegisterController {
 
 	@GetMapping("/getCandidates")
 	public List<Candidate> getCandidates() {
-		
+
 		List<Candidate> listOfCandidates = regDao.findAll();
 
 		listOfCandidates.forEach(x -> {
 			System.out.println(x.getName() + " " + x.getExperience() + " " + x.getSkills() + " " + x.getLocation());
 		});
-		
+
 		return listOfCandidates;
 	}
 
-	@GetMapping(value ="/getSepcificCandidates" )
+	@GetMapping(value = "/getSepcificCandidates")
 	public Candidate getSepcificCandidates(@RequestParam String candidateName) {
-		System.out.println("Inside /getSepcificCandidates:: "+candidateName);
+		System.out.println("Inside /getSepcificCandidates:: " + candidateName);
 		Candidate candidate = regDao.findByName(candidateName);
-		
+
 		Optional<Candidate> optCandidate = Optional.ofNullable(candidate);
 		System.out.println(optCandidate);
-		
-		if(optCandidate.isPresent())
-		{
+
+		if (optCandidate.isPresent()) {
 			return candidate;
-		}
-		else
-		{
+		} else {
 			return null;
 		}
-		
+
 	}
-	
-	@PostMapping(value ="/getCandidateBySkill" )
-	public Candidate getCandidateBySkill(@RequestParam String skills,@RequestParam String exp ) {
-		
+
+	@PostMapping(value = "/getCandidateBySkill")
+	public Candidate getCandidateBySkill(@RequestParam String skills, @RequestParam String exp) {
+
 		Float floatExp = Float.parseFloat(exp);
-		System.out.println("Experience in float:: "+floatExp);
+		System.out.println("Experience in float:: " + floatExp);
 		Candidate candidate = regDao.findByExpAndSkills(floatExp, skills);
-		
+
 		Optional<Candidate> optCandidate = Optional.ofNullable(candidate);
 		System.out.println(optCandidate);
-		
-		if(optCandidate.isPresent())
-		{
+
+		if (optCandidate.isPresent()) {
 			return candidate;
-		}
-		else
-		{
+		} else {
 			return null;
 		}
-		
 	}
-	
-	
-	
-	
-	@PostMapping(value= "/saveCandidate")
+
+	@PostMapping(value = "/saveCandidate")
 	public List<Candidate> saveCandidate(@RequestBody Candidate candidate) {
-		
+
 		Candidate savedCandidate = regDao.save(candidate);
-		
-		System.out.println("Inside saveCandidate:: "+savedCandidate);
+
+		System.out.println("Inside saveCandidate:: " + savedCandidate);
 		List<Candidate> listOfCandidates = regDao.findAll();
 
 		listOfCandidates.forEach(x -> {
 			System.out.println(x.getName() + " " + x.getExperience() + " " + x.getSkills() + " " + x.getLocation());
 		});
-		
+
 		return listOfCandidates;
 	}
+	
+	@PostMapping(value = "/updateCandidate")
+	public String updateCandidate(@RequestParam String id) {
+
+		Long londId = Long.parseLong(id);
+		System.out.println("Inside :: updateCandidate() ");
+		String activeFlag = "N";
+		Integer status = regDao.updateById(londId,activeFlag);
+
+		Optional<Integer> optStatus = Optional.ofNullable(status);
+
+		if (optStatus.isPresent()) {
+			return "Record Deleted Successfully";
+		} else {
+			return null;
+		}
+	
+	}
+	
 
 }

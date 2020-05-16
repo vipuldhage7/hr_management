@@ -28,6 +28,8 @@ public class Candidate implements Serializable{
 	private String skills;
 	
 	private String location;
+	
+	private String is_Active;
 
 	public Long getId() {
 		return id;
@@ -68,6 +70,17 @@ public class Candidate implements Serializable{
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	
+
+	public String getIs_Active() {
+		return is_Active;
+	}
+
+	public void setIs_Active(String is_Active) {
+		this.is_Active = is_Active;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 }
